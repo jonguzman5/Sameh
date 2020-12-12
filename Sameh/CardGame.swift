@@ -15,6 +15,11 @@ class CardGame {
     var availableCards = PlayingCardDeck()
     var cardsInHand = PlayingCardDeck()
     
+    var cpuScore = 0;
+    var playerScore = 0;
+    var playerMoney = 100;
+    var playerBet = 0;
+    
     func getCards(noOfCards: Int) -> [PlayingCard]{
         var cards = [PlayingCard]()
         for _ in 0..<noOfCards {
@@ -23,5 +28,10 @@ class CardGame {
         }
         return cards
     }
+    
+    func computeScore(){
+        
+    }
+    
     
 }

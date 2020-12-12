@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     let noOfCards = 5
+    let initVal = 0
     
     @IBOutlet weak var cpuHandView: PlayingCardDeckView!
     @IBOutlet weak var playerHandView: PlayingCardDeckView!
@@ -22,7 +23,7 @@ class ViewController: UIViewController {
         else { return nil }
     }
     @IBOutlet weak var cpuScoreLabel: UILabel!
-    
+    var cpuScore = 0 { didSet { cpuScoreLabel.text = "Score: \(cpuScore)" } }
     
     // MARK: Player UI components
     var playerHand: [PlayingCardView]! {
@@ -45,6 +46,12 @@ class ViewController: UIViewController {
     
     func newGame(){
         game = CardGame()
+        cpuScore = game.cpuScore
+        playerScore = game.playerScore
+        playerMoney = game.playerMoney
+        playerBet = game.playerBet
+        playerHand.forEach({ $0.removeFromSuperview() })
+        cpuHand.forEach({ $0.removeFromSuperview() })
         game.availableCards = PlayingCardDeck()
         addCardsToGame(from: getCardViews(noOfCards: noOfCards), to: cpuHandView)
         addCardsToGame(from: getCardViews(noOfCards: noOfCards), to: playerHandView)
@@ -89,22 +96,40 @@ class ViewController: UIViewController {
     
     @objc func tradeCard(_ sender: UITapGestureRecognizer){
         let card = sender.view as! PlayingCardView
-        if let dealtCard = game.availableCards.draw(){
-            card.rank = dealtCard.rank.order
-            card.suit = dealtCard.suit.rawValue
+        if game.playerMoney >= 5 {
+            if let dealtCard = game.availableCards.draw(){
+                card.rank = dealtCard.rank.order
+                card.suit = dealtCard.suit.rawValue
+            }
+            game.playerMoney -= 5
+            playerMoney = game.playerMoney
         }
     }
     
     @IBAction func deal(_ sender: Any) {
-        
+        let dealButton = sender as! UIButton
+        if game.playerBet > 0 {
+            dealButton.isEnabled = true
+            for index in playerHand.indices {
+                if let dealtCard = game.availableCards.draw(){
+                    playerHand[index].rank = dealtCard.rank.order
+                    playerHand[index].suit = dealtCard.suit.rawValue
+                }
+            }
+        }
     }
     
     @IBAction func bet(_ sender: Any) {
-        
+        if(game.playerMoney > 0){
+            game.playerBet += 1
+            playerBet = game.playerBet
+            game.playerMoney -= 1
+            playerMoney = game.playerMoney
+        }
     }
     
     @IBAction func reset(_ sender: Any) {
-        
+        newGame()
     }
     
 }
