@@ -19,6 +19,7 @@
 		ABC53D9E2582A8170057ABDD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC53D9D2582A8170057ABDD /* ViewController.swift */; };
 		ABC53DA32582A8180057ABDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABC53DA22582A8180057ABDD /* Assets.xcassets */; };
 		ABC53DA62582A8180057ABDD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABC53DA42582A8180057ABDD /* LaunchScreen.storyboard */; };
+		ABE2064F2585B471000820D3 /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE2064E2585B471000820D3 /* ViewController2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		ABC53DA22582A8180057ABDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABC53DA52582A8180057ABDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ABC53DA72582A8180057ABDD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ABE2064E2585B471000820D3 /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				AB0F4DBD2582ACD300E07692 /* PlayingCardView.swift */,
 				AB0F4DC42582AEED00E07692 /* PlayingCardDeckView.swift */,
 				ABC53D9D2582A8170057ABDD /* ViewController.swift */,
+				ABE2064E2585B471000820D3 /* ViewController2.swift */,
 				AB0F4DC22582AD2700E07692 /* Main.storyboard */,
 				ABC53DA22582A8180057ABDD /* Assets.xcassets */,
 				ABC53DA72582A8180057ABDD /* Info.plist */,
@@ -169,6 +172,7 @@
 				ABC53D9A2582A8170057ABDD /* AppDelegate.swift in Sources */,
 				AB0F4DBC2582ACB000E07692 /* PlayingCardDeck.swift in Sources */,
 				AB0F4DC52582AEED00E07692 /* PlayingCardDeckView.swift in Sources */,
+				ABE2064F2585B471000820D3 /* ViewController2.swift in Sources */,
 				AB0F4DBA2582AC8D00E07692 /* PlayingCard.swift in Sources */,
 				ABC53D9C2582A8170057ABDD /* SceneDelegate.swift in Sources */,
 				AB0F4DC72582B90B00E07692 /* Grid.swift in Sources */,

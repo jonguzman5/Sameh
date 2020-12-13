@@ -1,16 +1,16 @@
 //
-//  ViewController.swift
+//  ViewController2.swift
 //  Sameh
 //
-//  Created by ジョナサン on 12/10/20.
+//  Created by ジョナサン on 12/12/20.
 //  Copyright © 2020 ジョナサン. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController2: UIViewController {
     
-    let noOfCards = 3
+    let noOfCards = 5
     let initVal = 0
     
     @IBOutlet weak var cpuHandView: PlayingCardDeckView!
@@ -221,27 +221,4 @@ class ViewController: UIViewController {
         betButton.isEnabled = true
     }
     
-}
-
-// MARK: Extensions
-extension CGFloat {
-    var arc4random: CGFloat {
-        return self * (CGFloat(arc4random_uniform(UInt32.max))/CGFloat(UInt32.max))
-    }
-}
-
-extension UILabel {
-    func setBorder(){
-        self.layer.borderWidth = 3.0
-        self.layer.borderColor = UIColor.white.cgColor
-        self.layer.cornerRadius = 3.0
-    }
-}
-
-extension UIButton {
-    func setBorder(){
-        self.layer.borderWidth = 6.0
-        self.layer.borderColor = UIColor.white.cgColor
-        self.layer.cornerRadius = 6.0
-    }
 }
