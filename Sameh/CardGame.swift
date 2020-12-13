@@ -29,9 +29,12 @@ class CardGame {
         return cards
     }
     
-    func computeScore(){
-        
+    func calculateScore(_ cards: [PlayingCardView]) -> Int{
+        var score = 0
+        for index in cards.indices {
+            score += cards[index].rank
+        }
+        return score
     }
-    
     
 }

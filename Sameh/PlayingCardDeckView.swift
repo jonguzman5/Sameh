@@ -35,10 +35,8 @@ import UIKit
                                 duration: 0.6,
                                 options: .transitionFlipFromLeft,
                                 animations: {
-/*
                                     (self.subviews[index] as? PlayingCardView)!.isFaceUp = !(self.subviews[index] as? PlayingCardView)!.isFaceUp
                                     self.animationHasBeenShown = true
- */
                                 }
                             )
                         }

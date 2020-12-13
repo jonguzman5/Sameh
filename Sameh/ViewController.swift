@@ -50,13 +50,18 @@ class ViewController: UIViewController {
         playerScore = game.playerScore
         playerMoney = game.playerMoney
         playerBet = game.playerBet
+        prevPlayerMoney = game.playerMoney
+        dealCycleCounter = 0
         playerHand.forEach({ $0.removeFromSuperview() })
         cpuHand.forEach({ $0.removeFromSuperview() })
         game.availableCards = PlayingCardDeck()
         addCardsToGame(from: getCardViews(noOfCards: noOfCards), to: cpuHandView)
         addCardsToGame(from: getCardViews(noOfCards: noOfCards), to: playerHandView)
-        //cpuHandView.animationHasBeenShown = false
-        //playerHandView.animationHasBeenShown = false
+        cpuHandView.animationHasBeenShown = false
+        playerHandView.animationHasBeenShown = false
+        flipCards(playerHand)
+        playerHandScore = game.calculateScore(playerHand)
+        playerScore = playerHandScore
     }
     
     override func viewDidLoad() {
@@ -100,26 +105,109 @@ class ViewController: UIViewController {
             if let dealtCard = game.availableCards.draw(){
                 card.rank = dealtCard.rank.order
                 card.suit = dealtCard.suit.rawValue
+                game.playerMoney -= 5
+                playerMoney = game.playerMoney
             }
-            game.playerMoney -= 5
-            playerMoney = game.playerMoney
         }
     }
     
+    func tradeCards(_ cards: [PlayingCardView]){
+        for index in cards.indices {
+            if let dealtCard = game.availableCards.draw(){
+                cards[index].rank = dealtCard.rank.order
+                cards[index].suit = dealtCard.suit.rawValue
+            }
+        }
+    }
+    
+    func flipCards(_ cards: [PlayingCardView]){
+        for index in cards.indices {
+            let card = cards[index]
+            UIView.transition(
+                with: card,
+                duration: 1,
+                options: .transitionFlipFromLeft,
+                animations: {
+                    card.isFaceUp = !card.isFaceUp
+                }
+            )
+        }
+    }
+    
+    var dealCycleCounter = 0
+    var cpuHandScore = 0
+    var playerHandScore = 0
+    var prevPlayerMoney = 0
+
+    func runScoreCheck(_ playerHandScore: Int, _ cpuHandScore: Int){
+        let playerBetTemp = game.playerBet
+        game.playerBet = 0
+        playerBet = game.playerBet
+        
+        game.playerMoney = prevPlayerMoney
+        playerMoney = game.playerMoney
+        
+        if (playerHandScore >= (cpuHandScore * 2)) {
+            game.playerMoney += (playerBetTemp * 2)
+            playerMoney = game.playerMoney
+            prevPlayerMoney = game.playerMoney
+        }
+        else if (playerHandScore > cpuHandScore) {
+            game.playerMoney += playerBetTemp
+            playerMoney = game.playerMoney
+            prevPlayerMoney = game.playerMoney
+        }
+        else if (playerHandScore < cpuHandScore) {
+            game.playerMoney -= playerBetTemp
+            playerMoney = game.playerMoney
+            prevPlayerMoney = game.playerMoney
+        }
+        else if (playerHandScore == cpuHandScore){
+            game.playerMoney = prevPlayerMoney
+            playerMoney = game.playerMoney
+            prevPlayerMoney = game.playerMoney
+        }
+        //betButton.isEnabled = true
+    }
+    
+    
     @IBAction func deal(_ sender: Any) {
+        print("pressed")
         let dealButton = sender as! UIButton
         if game.playerBet > 0 {
             dealButton.isEnabled = true
-            for index in playerHand.indices {
-                if let dealtCard = game.availableCards.draw(){
-                    playerHand[index].rank = dealtCard.rank.order
-                    playerHand[index].suit = dealtCard.suit.rawValue
-                }
+            if dealCycleCounter == 0 {
+                print("deal@0")
+                flipCards(cpuHand)
+                cpuHandScore = game.calculateScore(cpuHand)
+                cpuScore = cpuHandScore
+                runScoreCheck(playerHandScore, cpuHandScore)
+                betButton.isEnabled = false
+                dealCycleCounter += 1
+                return
             }
+        }
+        if dealCycleCounter == 1 {
+            print("deal@1")
+            cpuHandScore = 0
+            cpuScore = cpuHandScore
+            flipCards(cpuHand)
+            flipCards(playerHand)
+            dealButton.isEnabled = true
+            tradeCards(playerHand)
+            tradeCards(cpuHand)
+            flipCards(playerHand)
+            playerHandScore = game.calculateScore(playerHand)
+            playerScore = playerHandScore
+            dealButton.isEnabled = false
+            betButton.isEnabled = true
+            dealCycleCounter -= 1//cycle reset
+            return
         }
     }
     
     @IBAction func bet(_ sender: Any) {
+        dealButton.isEnabled = true
         if(game.playerMoney > 0){
             game.playerBet += 1
             playerBet = game.playerBet
@@ -130,6 +218,7 @@ class ViewController: UIViewController {
     
     @IBAction func reset(_ sender: Any) {
         newGame()
+        betButton.isEnabled = true
     }
     
 }

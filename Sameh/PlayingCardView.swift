@@ -165,7 +165,7 @@ import UIKit
         UIColor.white.setFill()
         roundedRect.fill()
         
-        print("\(rankString+suit)")
+        //print("\(rankString+suit)")
         
         if isFaceUp {
             if let faceCardImage = UIImage(named: rankString+suit,
